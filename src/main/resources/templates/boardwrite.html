@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 작성폼</title>
+</head>
+
+<style>
+    .layout {
+        width : 500px;
+        margin : 0 auto;
+        margin-top : 40px;
+    }
+
+    .layout input, textarea {
+        width : 100%;
+        box-sizing : border-box;
+        margin-top : 5px;
+        margin-bottom : 5px;
+    }
+
+    .layout textarea {
+        min-height : 300px;
+    }
+
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    function write_post() {
+
+        const title = $("input#title").val();
+        const content = $("textarea#content").val();
+
+        if(title == "") {
+            alert("제목을 입력해주세요.");
+            return false;
+        }
+
+        if(content == "") {
+            alert("내용을 입력해주세요.");
+            return false;
+        }
+
+        if(title != "" && content != "") {
+
+            $("form[name=go_post]").submit();
+
+        }
+
+    }
+
+</script>
+<body>
+    <div class="layout">
+        <form action="/board/writepro" method="post" name="go_post">
+            <span>작성자</span>
+            <input name="writer" th:value="${session.loginUserid}" readonly>
+            <span>제목</span>
+            <input name="title" id="title" type="text">
+            <span>내용</span>
+            <textarea name="content" id="content"></textarea>
+            <button type="button" th:onclick="write_post()">작성</button>
+        </form>
+    </div>
+</body>
+</html>

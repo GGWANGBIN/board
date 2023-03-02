@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+</head>
+
+<style>
+    div.modify_info {
+        display : flex;
+        justify-content : center;
+        align-items : center;
+    }
+    div.modify_info > form {
+        display : flex;
+        flex-direction : column;
+        margin-top : 10%;
+    }
+    button.modify_button {
+        margin-top : 10px;
+    }
+
+</style>
+
+<body>
+<h1>회원정보 수정</h1>
+<hr>
+<div class="modify_info">
+  <form th:action="@{/member/individualupdate/{id}(id = ${member.id})}" method="post">
+    <label style="margin-bottom: 5px;">이름</label>
+    <input id="name" name="name" type="text" th:value="${member.name}" placeholder="이름">
+    <label style="margin-bottom: 5px;">아이디</label>
+    <input id="userid" name="userid" type="text" th:value="${member.userid}" placeholder="아이디">
+    <label style="margin-bottom: 5px;">비밀번호</label>
+    <input id="pwd" name="pwd" type="password" th:value="${member.pwd}" placeholder="비밀번호">
+    <button class="modify_button" type="submit">수정하기</button>
+  </form>
+</div>
+</body>
+</html>

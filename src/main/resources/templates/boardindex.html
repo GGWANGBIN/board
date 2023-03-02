@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 메인화면</title>
+</head>
+<style>
+    .container {
+        margin : 25px;
+        width : 100%;
+        height : 100%;
+    }
+
+    .main_menu {
+        margin-top : 5px;
+        margin-left : 20px;
+    }
+
+    .login_member {
+        margin-top : 5px;
+        margin-left : 50px;
+    }
+
+
+    img.slide1 {
+        width:1400px;
+        height:600px;
+    }
+
+
+</style>
+
+<script>
+    var index = 0;   //이미지에 접근하는 인덱스
+    window.onload = function(){
+        slideShow();
+    }
+
+    function slideShow() {
+    var i;
+    var x = document.getElementsByClassName("slide1");  //slide1에 대한 dom 참조
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";   //처음에 전부 display를 none으로 한다.
+    }
+    index++;
+    if (index > x.length) {
+        index = 1;  //인덱스가 초과되면 1로 변경
+    }
+    x[index-1].style.display = "block";  //해당 인덱스는 block으로
+    setTimeout(slideShow, 3000);   //함수를 4초마다 호출
+
+}
+</script>
+
+
+<body>
+<div class="container">
+    <nav style="display:flex;">
+       <a class="main_logo"><img src="/images/logo.png"/></a>
+       <a class="main_menu" th:href="@{/board/list}">게시판</a>
+
+       <th:block th:if="${session.loginUserid == null}">
+           <a class="main_menu" th:href="@{/member/login}">로그인</a>
+       </th:block>
+
+       <th:block th:if="${session.loginUserid != null && session.loginUserid != 'admin'}">
+           <a class="main_menu" th:href="@{/member/individualmodify/{id}(id = ${session.loginid})}">회원정보수정</a>
+       </th:block>
+
+       <th:block th:if="${session.loginUserid != null}">
+           <a class="main_menu" th:href="@{/member/logout}">로그아웃</a>
+       </th:block>
+
+       <th:block th:if="${session.loginUserid == null}">
+           <a class="main_menu" th:href="@{/member/register}">회원가입</a>
+       </th:block>
+       <th:block th:if="${session.loginUserid == 'admin'}">
+           <a class="main_menu" th:href="@{/member/management}">회원관리</a>
+       </th:block>
+       <th:block th:if="${session.loginUserid != null}">
+           <span class="login_member" th:text="${session.loginUserid}+'님 로그인 중입니다.'"></span>
+       </th:block>
+    </nav>
+
+    <div>
+        <img class="slide1" src="/images/main_image_01.jpg" >
+        <img class="slide1" src="/images/main_image_02.jpg">
+        <img class="slide1" src="/images/main_image_03.jpg">
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+
+<style>
+    div.register_info {
+        display : flex;
+        justify-content : center;
+        align-items : center;
+    }
+    div.register_info > form {
+        display : flex;
+        flex-direction : column;
+        margin-top : 10%;
+    }
+    button.register_button {
+        margin-top : 10px;
+    }
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    function register() {
+
+        const userid = $("input#userid").val();
+        const name = $("input#name").val();
+        const pwd = $("input#pwd").val();
+
+        if(name == "") {
+            alert("이름을 입력해주세요.");
+            return false;
+        }
+
+        if(userid == "") {
+            alert("아이디를 입력해주세요.");
+            return false;
+        }
+
+        if(pwd == "") {
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        }
+
+        if(userid != "" && name != "" && pwd != "") {
+
+            $("form[name=go_register]").submit();
+
+        }
+
+    }
+
+
+</script>
+
+<body>
+<h1>회원가입</h1>
+<hr>
+<div class="register_info">
+    <form action="/member/registerpro"  method="post" name="go_register">
+        <label style="margin-bottom: 5px;">이름</label>
+        <input id="name" name="name" type="text" placeholder="이름">
+        <label style="margin-bottom: 5px;">아이디</label>
+        <input id="userid" name="userid" type="text" placeholder="아이디">
+        <label style="margin : 5px 0px 5px;">비밀번호</label>
+        <input id="pwd" name="pwd" type="password" placeholder="비밀번호">
+        <button class="register_button" type="button" th:onclick="register()">가입하기</button>
+    </form>
+</div>
+</body>
+</html>
