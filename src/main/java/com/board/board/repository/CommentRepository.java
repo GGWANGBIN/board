@@ -1,6 +1,5 @@
 package com.board.board.repository;
 
-import com.board.board.entity.Board;
 import com.board.board.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -18,11 +17,8 @@ public class Member {
     private Integer id;
 
     @Column
-    @NotBlank(message = "아이디는 필수 입력값입니다.")
     private String userid;
-    @NotBlank(message = "비밀번호는 필수 입력값입니다.")
     private String pwd;
-    @NotBlank(message = "이름은 필수 입력값입니다.")
     private String name;
 
     public static Member toMemberEntity(MemberDTO memberDTO) {

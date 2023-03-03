@@ -1,7 +1,6 @@
 package com.board.board.controller;
 
 import com.board.board.dto.MemberDTO;
-import com.board.board.entity.Board;
 import com.board.board.entity.Member;
 import com.board.board.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
+
 
 @Controller
 public class MemberController {
@@ -120,8 +119,8 @@ public class MemberController {
 
 
     @PostMapping("/member/loginpro")
-    public String loginPro(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session,
-                           @Valid Member member, BindingResult bindingResult) {
+    public String loginPro(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session
+                           ,BindingResult bindingResult) {
 
         MemberDTO loginResult = memberService.login(memberDTO);
         if(loginResult != null) {

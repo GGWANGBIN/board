@@ -3,15 +3,10 @@ package com.board.board.controller;
 import com.board.board.dto.CommentDTO;
 import com.board.board.entity.Board;
 import com.board.board.entity.Comment;
-import com.board.board.repository.BoardRepository;
 import com.board.board.service.BoardService;
 import com.board.board.service.CommentService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
+
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,7 +41,7 @@ public class BoardController {
     @GetMapping("/board/index")
     public String boardIndex() {
 
-        return "boardindex";
+        return "board_index";
     }
 
 
@@ -57,7 +49,7 @@ public class BoardController {
     @GetMapping("/board/write") //localhost:8080/board/write
     public String boardWriteForm() {
 
-        return "boardwrite";
+        return "board_write";
     }
 
     @PostMapping("/board/writepro")
@@ -83,51 +75,6 @@ public class BoardController {
         return "message";
     }
 
-
-/*
-    @GetMapping("/board/commentview")
-    @ResponseBody
-    public String readComment(HttpServletRequest request, HttpSession session) {
-
-        String parentseq = request.getParameter("parentseq");
-
-        System.out.println("!!!"+parentseq);
-
-        int transParentseq = Integer.parseInt(parentseq);
-
-        String loginuser = (String) session.getAttribute("loginUserid");
-
-        List<Comment> commentList = commentService.getCommentList(transParentseq);
-
-        JSONArray jsonArr = new JSONArray();
-
-        if(commentList != null) {
-            for(Comment comment : commentList) {
-                JSONObject jsonObj = new JSONObject();
-
-                LocalDateTime nomalTime = comment.getCreate_date();
-                String writedate = nomalTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-                System.out.println(writedate);
-
-                jsonObj.put("id", comment.getId());
-                jsonObj.put("comment_content", comment.getComment_content());
-                jsonObj.put("writer", comment.getWriter());
-                jsonObj.put("create_date", writedate);
-                jsonObj.put("login", loginuser);
-
-                jsonArr.add(jsonObj);
-
-                System.out.println("갓진석" + jsonArr);
-            }
-        }
-
-        return jsonArr.toString();
-
-    }
-
-
- */
 
     @PostMapping("/board/commentwrite")
     @ResponseBody
@@ -169,7 +116,7 @@ public class BoardController {
         model.addAttribute("searchType",searchType);
         model.addAttribute("searchKeyword",searchKeyword);
 
-        return "boardlist";
+        return "board_list";
     }
 
     @GetMapping("/board/view")
@@ -221,7 +168,7 @@ public class BoardController {
         model.addAttribute("board", boardService.boardView(id));
         model.addAttribute("comment", commentService.getCommentList(id));
 
-        return "boardview";
+        return "board_view";
     }
 
     @GetMapping("/board/delete")
@@ -254,7 +201,7 @@ public class BoardController {
 
         model.addAttribute("board", boardService.boardView(id));
 
-        return "boardmodify";
+        return "board_modify";
     }
 
     @PostMapping("/board/update/{id}")
