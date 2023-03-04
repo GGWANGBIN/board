@@ -11,10 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -30,7 +27,7 @@ public class MemberController {
     @GetMapping("/member/register") //localhost:8080/board/write
     public String boardWriteForm() {
 
-        return "memberregister";
+        return "member_register";
     }
 
 
@@ -45,11 +42,27 @@ public class MemberController {
         return "message";
     }
 
+    @PostMapping("member/idCheck")
+    @ResponseBody
+    public String idCheck(@RequestParam("userid") String userid) {
+
+        int cnt = memberService.idCheck(userid);
+
+        System.out.println(cnt);
+
+        if(cnt == 1) {
+            return "1";
+        }
+
+        return null;
+
+    }
+
     // 로그인 페이지 요청
     @GetMapping("/member/login")
     public String login() {
 
-        return "memberlogin";
+        return "member_login";
     }
 
     @GetMapping("/member/modify/{id}")
@@ -57,7 +70,7 @@ public class MemberController {
 
         model.addAttribute("member", memberService.memberView(id));
 
-        return "membermodify";
+        return "member_modify";
     }
 
     @GetMapping("/member/individualmodify/{id}")
@@ -65,7 +78,7 @@ public class MemberController {
 
         model.addAttribute("member", memberService.memberView(id));
 
-        return "individualmodify";
+        return "individual_modify";
     }
 
 
@@ -126,13 +139,14 @@ public class MemberController {
         if(loginResult != null) {
             session.setAttribute("loginUserid",loginResult.getUserid());
             session.setAttribute("loginid",loginResult.getId());
+            session.setAttribute("loginUserName",loginResult.getName());
 
-            String loginUserid = loginResult.getUserid();
+            String loginUserName = loginResult.getName();
             int loginid = loginResult.getId();
 
         //    System.out.println(loginUserid);
 
-            model.addAttribute("message", loginUserid + "님 환영합니다!");
+            model.addAttribute("message", loginUserName + "님 환영합니다!");
             model.addAttribute("searchUrl", "/board/index");
             return "message";
         } else {
@@ -175,7 +189,7 @@ public class MemberController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "memberlist";
+        return "member_list";
     }
 
     @GetMapping("/member/delete/{id}")

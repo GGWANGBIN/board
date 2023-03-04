@@ -78,7 +78,7 @@
            <a class="main_menu" th:href="@{/member/management}">회원관리</a>
        </th:block>
        <th:block th:if="${session.loginUserid != null}">
-           <span class="login_member" th:text="${session.loginUserid}+'님 로그인 중입니다.'"></span>
+           <span class="login_member" th:text="${session.loginUserName}+'님 로그인 중입니다.'"></span>
        </th:block>
     </nav>
 

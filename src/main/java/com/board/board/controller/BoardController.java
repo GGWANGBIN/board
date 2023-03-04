@@ -80,6 +80,8 @@ public class BoardController {
     @ResponseBody
     public String commentWritePro(@ModelAttribute CommentDTO commentDTO, Comment comment, Model model) {
 
+
+
         boardService.commentWrite(comment);
 
         model.addAttribute("success","success");
