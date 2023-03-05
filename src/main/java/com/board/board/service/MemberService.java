@@ -32,6 +32,7 @@ public class MemberService {
 
     public void memberUpdate(Member member) {
 
+        member.setPwd(passwordEncoder.encode(member.getPwd()));
         memberRepository.save(member);
     }
 

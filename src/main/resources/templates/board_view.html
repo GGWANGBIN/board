@@ -27,13 +27,11 @@
 
             const comment_date = target.parent().parent().find('#comment_date').text();
 
-            dddd = comment_date.toString().replace('T', ' ').substring(0, 19)
 
             $("textarea.content3").focus();
 
             $("input#c_num").val(commentid);
             $("input#c_writer").val(comment_writer);
-            $("input#c_date").val(dddd);
 
 
         });
@@ -47,9 +45,12 @@
 
             const comment_num = target.parent().parent().find('input#c_num').val();
 
-            alert(comment_num);
-
             const modify_content = $('#modify_comment_content').val();
+
+            if(modify_content == "") {
+                alert("수정할 댓글내용을 입력해주세요.");
+                return false;
+            }
 
             $("form[name=comment_edit_form]").submit();
 
@@ -193,9 +194,9 @@
         <div class="ml-3 w-100 comment_edit" id="">
             <form action="/comment/update" name="comment_edit_form" method="post">
                 <textarea class="pl-2 py-2 content3 w-50" id="modify_comment_content" name="comment_content" rows="5"></textarea>
-                <input type="text" id="c_num" name="id">
-                <input type="text" id="c_writer" name="writer">
-                <input type="text" id="parent_seq" name="parentseq" th:value="${board.id}">
+                <input type="hidden" id="c_num" name="id">
+                <input type="hidden" id="c_writer" name="writer">
+                <input type="hidden" id="parent_seq" name="parentseq" th:value="${board.id}">
             </form>
             <div class="justify-content-end mt-2">
                 <button type="button" class="btn btn-info edit_comment" id="edit_comment_ok">댓글 수정</button>
